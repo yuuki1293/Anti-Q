@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "antiq",
+  "name": "Anti Q",
+  "description": "Suppress item drops.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/yuuki1293/Anti-Q",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["yuuki1293"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
