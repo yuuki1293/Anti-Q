@@ -3,6 +3,7 @@ package com.yuuki1293.antiq;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.settings.IKeyConflictContext;
@@ -84,12 +85,15 @@ public class TossKeyManager {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         String[] items = {"enchanted_golden_apple", "diamond_pickaxe", "diamond_shovel"};
 
-        ItemStack current = player.inventory.getCurrentItem();
+        InventoryPlayer inv = player.inventory;
 
-        return Arrays.stream(items)
-                .map(Item::getByNameOrId)
-                .noneMatch(item ->
-                        current.getItem().equals(item)
-                );
+        if (inv != null) {
+            ItemStack current = inv.getCurrentItem();
+            return Arrays.stream(items)
+                    .map(Item::getByNameOrId)
+                    .noneMatch(item ->
+                            current.getItem().equals(item)
+                    );
+        } else return false;
     }
 }
