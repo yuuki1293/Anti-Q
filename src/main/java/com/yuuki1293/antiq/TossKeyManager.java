@@ -36,7 +36,7 @@ public class TossKeyManager {
                 .setKeyConflictContext(new IKeyConflictContext() {
                     @Override
                     public boolean isActive() {
-                        return q_count >= 1 || flag;
+                        return q_count >= AntiQ.CONFIG.count - 1 || flag;
                     }
 
                     @Override
@@ -50,7 +50,7 @@ public class TossKeyManager {
     @SideOnly(Side.CLIENT)
     public void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase.equals(TickEvent.Phase.START)) {
-            if (checkInventory()) {
+            if (checkInventory() || !AntiQ.CONFIG.enable) {
                 flag = true;
                 q_count = 0;
                 before_keydown = false;
@@ -70,14 +70,14 @@ public class TossKeyManager {
     @SideOnly(Side.CLIENT)
     private static void click() {
         q_count++;
-        if (q_count > 1)
+        if (q_count >= AntiQ.CONFIG.count)
             q_count = 0;
     }
 
     @SideOnly(Side.CLIENT)
     private static boolean checkInventory() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
-        String[] items = {"golden_apple", "diamond_pickaxe", "diamond_shovel"};
+        String[] items = AntiQ.CONFIG.items;
 
         if (player != null) {
             ItemStack current = player.inventory.getCurrentItem();

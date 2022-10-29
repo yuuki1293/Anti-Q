@@ -2,6 +2,7 @@ package com.yuuki1293.antiq;
 
 import com.yuuki1293.antiq.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
@@ -31,6 +32,7 @@ public class AntiQ {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(this);
         proxy.preInit(event);
     }
 
@@ -42,5 +44,28 @@ public class AntiQ {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+    }
+
+    @Config(modid = MODID, type = Config.Type.INSTANCE)
+    @Mod.EventBusSubscriber
+    public static class CONFIG {
+        @Config.Comment({"Enable or disable mod"})
+        public static boolean enable = true;
+        @Config.Comment({"Target item list"})
+        public static String[] items = {
+                "golden_apple",
+                "diamond_pickaxe",
+                "diamond_shovel",
+                "diamond_axe",
+                "diamond_sword",
+                "diamond_helmet",
+                "elytra",
+                "diamond_leggings",
+                "diamond_boots",
+                "wooden_shovel"
+        };
+        @Config.Comment({"Number of times required to discard"})
+        @Config.RangeInt(min = 1)
+        public static int count = 2;
     }
 }
