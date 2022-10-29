@@ -76,13 +76,12 @@ public class TossKeyManager {
         q_count++;
         if (q_count > 1)
             q_count = 0;
-        LOGGER.debug("q_count:" + q_count + " before_keydown:" + before_keydown);
     }
 
     @SideOnly(Side.CLIENT)
     private static boolean checkInventory() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
-        String[] items = {"enchanted_golden_apple", "diamond_pickaxe", "diamond_shovel"};
+        String[] items = {"golden_apple", "diamond_pickaxe", "diamond_shovel"};
 
         if (player != null) {
             ItemStack current = player.inventory.getCurrentItem();
