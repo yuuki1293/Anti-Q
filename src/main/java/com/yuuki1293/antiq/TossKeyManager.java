@@ -1,7 +1,10 @@
 package com.yuuki1293.antiq;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -10,6 +13,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = AntiQ.MODID)
 public class TossKeyManager {
@@ -45,15 +50,19 @@ public class TossKeyManager {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase.equals(TickEvent.Phase.END)) {
-            flag = true;
+        if (event.phase.equals(TickEvent.Phase.START)) {
+            if (checkInventory())
+                flag = true;
+            else {
+                flag = true;
 
-            boolean keydown = TossKeyManager.keyBindDrop.isKeyDown();
-            if (keydown && !before_keydown)
-                TossKeyManager.click();
+                boolean keydown = TossKeyManager.keyBindDrop.isKeyDown();
+                if (keydown && !before_keydown)
+                    TossKeyManager.click();
 
-            flag = false;
-            before_keydown = keydown;
+                flag = false;
+                before_keydown = keydown;
+            }
         }
     }
 
@@ -62,5 +71,18 @@ public class TossKeyManager {
         if (q_count > 1)
             q_count = 0;
         LOGGER.debug("q_count:" + q_count + " before_keydown:" + before_keydown);
+    }
+
+    private static boolean checkInventory() {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        String[] items = {"enchanted_golden_apple", "diamond_pickaxe", "diamond_shovel"};
+
+        ItemStack current = player.inventory.getCurrentItem();
+
+        return Arrays.stream(items)
+                .map(Item::getByNameOrId)
+                .anyMatch(item ->
+                        current.getItem().equals(item)
+                );
     }
 }
