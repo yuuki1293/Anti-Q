@@ -45,14 +45,16 @@ public class TossKeyManager {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        flag = true;
+        if (event.phase.equals(TickEvent.Phase.END)) {
+            flag = true;
 
-        boolean keydown = TossKeyManager.keyBindDrop.isKeyDown();
-        if (event.phase.equals(TickEvent.Phase.END) && keydown && !before_keydown)
-            TossKeyManager.click();
+            boolean keydown = TossKeyManager.keyBindDrop.isKeyDown();
+            if (keydown && !before_keydown)
+                TossKeyManager.click();
 
-        flag = false;
-        before_keydown = keydown;
+            flag = false;
+            before_keydown = keydown;
+        }
     }
 
     private static void click() {
