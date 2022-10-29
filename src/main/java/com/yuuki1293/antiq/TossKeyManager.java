@@ -12,15 +12,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = AntiQ.MODID)
 public class TossKeyManager {
-    static Logger LOGGER = LogManager.getLogger();
-
     public static KeyBinding keyBindDrop =
             Minecraft
                     .getMinecraft()
