@@ -1,5 +1,6 @@
 package com.yuuki1293.antiq;
 
+import com.yuuki1293.antiq.black.ModifyPacket;
 import com.yuuki1293.antiq.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +26,7 @@ public class AntiQ {
 
     @Mod.EventHandler
     public void construct(FMLConstructionEvent event) {
+        ModifyPacket.invalidThrow();
         MinecraftForge.EVENT_BUS.register(proxy);
     }
 
